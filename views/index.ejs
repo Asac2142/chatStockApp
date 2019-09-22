@@ -11,11 +11,12 @@
   <body>
       <ul id="messages" class="messages"></ul>
       <form action="/" method="POST" id="chatForm">
-        <input class="inputText" id="txt" name="inputText" autocomplete="off" autofocus="on" oninput="isTyping()" placeholder="type your message here..." />
+        <input class="inputText" id="txt" name="inputText" autocomplete="off" autofocus="on" oninput="isTyping()" placeholder="e.g /stock=yourCode" />
         <button class="btnSend" id="btnSend" name="btnSend">Send</button>
-      </form>
-      <script src="../../socket.io/socket.io.js"></script>
-      <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-      <script src="/src/chat.js"></script>
-  </body>
+      </form>      
+  </body>  
+  <script src="../../socket.io/socket.io.js"></script>
+  <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+  <script src="/src/chat.js"></script>  
 </html>
