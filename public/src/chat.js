@@ -1,4 +1,4 @@
-const socket = io.connect(`http://localhost:3500`);
+const socket = io.connect(`http://localhost:2142`);
 let username;
 
 Swal.fire({    
@@ -40,7 +40,3 @@ socket.on('is_online', (username) => {
         $('#messages').append($('<li>').html(username));       
     }    
 });
-
-const isTyping = () => {
-    
-};
