@@ -40,8 +40,8 @@ io.sockets.on('connection', (socket) => {
 });
 
 const getStock = async (code) => {
-    const a = await API.getStockInfo(code);
-    console.log(a);
+    const quote = await API.getStockInfo(code.toUpperCase());
+    io.emit('chat_message', `<strong>stockBot</strong>: <p style="color:#189ad3 ">${quote}</p>`)
 };
 
 const getStockCode = (msg) => {

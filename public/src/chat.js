@@ -27,14 +27,12 @@ $('form').submit((e) => {
     return false;
 });
 
-// append the chat text message
 socket.on('chat_message', (msg) => {    
     if(!msg.includes('undefined')) {        
         $('#messages').append($('<li>').html(msg));  
     }    
 });
 
-// append text if someone is online
 socket.on('is_online', (username) => {
     if (username) {        
         $('#messages').append($('<li>').html(username));       

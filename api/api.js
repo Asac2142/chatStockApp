@@ -4,9 +4,12 @@ const getStockInfo = async (stockCode) => {
     try {
         //result = await axios(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${stockCode}&apikey=demo`);
         let result = await axios(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MSFT&apikey=demo`);                
-        return getLatestStock(result.data['Time Series (Daily)']);        
+        let stock = getLatestStock(result.data['Time Series (Daily)']);
+        
+        stock = parseFloat(stock['4. close']).toFixed(2);
+        return `${stockCode.toUpperCase()} quote is $${stock} per share`;
     } catch (error) {
-        console.log(error);
+        console.log(`Somenthig went wrong getting stock info: ${error}`);
     }
 };
 
@@ -22,7 +25,7 @@ const getLatestStock = (data) => {
             day -= 1;            
         }
         else {
-            return data[date];            
+            return data[date];
         }
     }
 };
