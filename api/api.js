@@ -29,12 +29,11 @@ const getStockInfo = async (stockCode) => {
                 }                             
             });            
         }); 
-
-        console.log(quote);
-
     } catch (error) {
         console.log(`Somenthig went wrong getting stock info: ${error}`);
     }
+    
+    return quote;
 };
 
 const parseFile = async (thePath) => { 
