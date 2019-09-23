@@ -1,13 +1,28 @@
 const axios = require('axios');
+const csvTpJSON = require('csvtojson');
+const fs = require('fs');
 
 const getStockInfo = async (stockCode) => {
     try {
         //result = await axios(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${stockCode}&apikey=demo`);
-        let result = await axios(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MSFT&apikey=demo`);                
-        let stock = getLatestStock(result.data['Time Series (Daily)']);
+        //let result = await axios(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MSFT&apikey=demo`);                
+        // let result = await axios('https://stooq.com/q/l/?s=aapl.us&f=sd2t2ohlcv&h&e=csv');
         
-        stock = parseFloat(stock['4. close']).toFixed(2);
-        return `${stockCode.toUpperCase()} quote is $${stock} per share`;
+        await axios({
+            method: 'GET',
+            url: 'https://stooq.com/q/l/?s=aapl.us&f=sd2t2ohlcv&h&e=csv',
+            responseType: 'stream'
+        }).then((response) => {
+            response.data.pipe(fs.createWriteStream('/home/andres/Documents/aFile1.csv'));
+            csvTpJSON().fromFile('/home/andres/Documents/aFile1.csv').then((source) => {
+                console.log(source);
+            });
+        });
+        
+        // console.log(result);
+        //let stock = getLatestStock(result.data['Time Series (Daily)']);        
+        // stock = parseFloat(stock['4. close']).toFixed(2);
+        // return `${stockCode.toUpperCase()} quote is $${stock} per share`;
     } catch (error) {
         console.log(`Somenthig went wrong getting stock info: ${error}`);
     }
