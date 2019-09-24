@@ -27,9 +27,8 @@ const getStockInfo = async (stockCode) => {
                 } else {
                     response.data.pipe(fs.createWriteStream(fullPath));              
                     parseFile(fullPath).then((res) => {
-                        quote = `${stockCode} quote is $${res} per share`;
-                        resolve(quote);
-                        console.log(quote);
+                        quote = `${stockCode.toUpperCase()} quote is $${res} per share`;
+                        resolve(quote);                        
                     }).then(() => {
                         deleteDirectory(pathToFile);
                     });
