@@ -34,15 +34,13 @@ io.sockets.on('connection', (socket) => {
             io.emit('chat_message', `<strong>${socket.username}</strong>: ${message}`);
             getStock(getStockCode(message));
         } else {
-            io.emit('chat_message', `<strong>stockBot</strong>: <p style="color: red">code entered not valid</p>`);
+            io.emit('chat_message', `<strong>stockBot</strong>: <p style="color: red">"${message}" code entered not recognize</p>`);
         }
     });
 });
 
-const getStock = async (code) => {
-    // const quote = await API.getStockInfo(code.toUpperCase());
+const getStock = async (code) => {    
     await API.getStockInfo(code).then((res) => {
-        console.log(`Res: ${res}`);
         io.emit('chat_message', `<strong>stockBot</strong>: <p style="color:#189ad3 ">${res}</p>`)
     });    
 };
