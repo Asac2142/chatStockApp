@@ -30,18 +30,23 @@ io.sockets.on('connection', (socket) => {
     });
 
     socket.on('chat_message', (message) => {        
-        if (verifyMessage(message)) {                        
-            io.emit('chat_message', `<strong>${socket.username}</strong>: ${message}`);
-            getStock(getStockCode(message));
+        if (verifyMessage(message)) {
+            if (verifyInputCodeSyntaxt(message)) {
+                io.emit('chat_message', `<strong>${socket.username}</strong>: ${message}`);
+                getStock(getStockCode(message));
+            } else {
+                io.emit('chat_message', `<strong>stockBot</strong>: <p style="color:red">Code ${message} not recognized</p>`);
+            }            
         } else {
-            io.emit('chat_message', `<strong>stockBot</strong>: <p style="color: red">code entered not valid</p>`);
+            io.emit('chat_message', `<strong>${socket.username}</strong>: ${message}`);            
         }
     });
 });
 
-const getStock = async (code) => {
-    const quote = await API.getStockInfo(code.toUpperCase());
-    io.emit('chat_message', `<strong>stockBot</strong>: <p style="color:#189ad3 ">${quote}</p>`)
+const getStock = async (code) => {    
+    await API.getStockInfo(code).then((res) => {
+        io.emit('chat_message', `<strong>stockBot</strong>: <p style="color:#189ad3">${res}</p>`)
+    });    
 };
 
 const getStockCode = (msg) => {
@@ -49,6 +54,13 @@ const getStockCode = (msg) => {
 };
 
 const verifyMessage = (msg) => {
+    msg = msg.trim();
+    if (msg.includes('/stock')) {
+        return true;
+    }
+};
+
+const verifyInputCodeSyntaxt = (msg) => {
     msg = msg.trim();
     if (msg.includes('/stock=')) {
         if (msg.split('=').length === 2 && msg.split('=')[1]) {

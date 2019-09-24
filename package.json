@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node -r esm index.js"
+    "start": "node index.js"
   },
   "author": "Andres Alban",
   "license": "ISC",
@@ -15,6 +15,7 @@
     "ejs": "^2.7.1",
     "express": "^4.17.1",
     "request": "^2.88.0",
+    "rimraf": "^3.0.0",
     "socket.io": "^2.3.0"
   }
 }
