@@ -6,5 +6,5 @@ A simple chat app for chatting and getting stock information.
 
 ## Usage
 
-```npm install```
+```npm install```  
 ```npm start```
